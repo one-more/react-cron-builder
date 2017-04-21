@@ -1,0 +1,39 @@
+// @flow
+
+import React, {PureComponent} from 'react'
+import Select from 'react-select'
+import type {Option} from 'types/Option'
+import {parseTimeValue, getValues, getValue} from 'utils'
+
+type Props = {
+    value: any,
+    options: Array<Option>,
+    styleNameFactory: any,
+    onChange: Function
+}
+
+export default class DateInput extends PureComponent {
+    props: Props;
+
+    onChange = (onChange: Function) => {
+        return (value: any) => {
+            if(value instanceof Array) {
+                onChange(getValues(value))
+            } else {
+                onChange(getValue(value))
+            }
+        }
+    };
+
+    render() {
+        const {styleNameFactory, value, onChange} = this.props;
+        return (
+            <Select
+                {...this.props}
+                {...styleNameFactory('input')}
+                value={parseTimeValue(value)}
+                onChange={this.onChange(onChange)}
+            />
+        )
+    }
+}
