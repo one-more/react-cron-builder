@@ -9,6 +9,7 @@ import noop from 'lodash/noop'
 import Tab from './components/Tab'
 import PeriodicallyTab from './components/PeriodicallyTab'
 import PeriodicallyFrameTab from './components/PeriodicallyFrameTab'
+import FixedTimeTab from './components/FixedTimeTab'
 
 import './cron-builder.styl'
 
@@ -26,8 +27,16 @@ type State = {
     generatedExpression: string
 }
 
-const components = [PeriodicallyTab, PeriodicallyFrameTab];
-const getActiveTabIndex = () => 1;
+const components = [PeriodicallyTab, PeriodicallyFrameTab, FixedTimeTab];
+const getActiveTabIndex = (props: Props) => {
+    const {cronExpression} = props;
+    const parsedExpression = parseCronExpression(cronExpression);
+    if(parsedExpression.hours.includes('-')) {
+        return 1
+    } else {
+        return 0
+    }
+};
 
 export default class CronBuilder extends PureComponent {
     static defaultProps = {
@@ -111,7 +120,7 @@ export default class CronBuilder extends PureComponent {
                         onClick={this.generateExpression}
                         data-action
                     >
-                        Generate cron generatedExpression
+                        Generate cron expression
                     </button>
                 </div>
                 <If condition={!!generatedExpression}>

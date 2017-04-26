@@ -6,6 +6,7 @@ import type {CronExpression} from 'types/CronExpression'
 import head from 'lodash/head'
 import values from 'lodash/values'
 import {MINUTES, HOURS} from 'data/constants'
+import {EVERY} from "../data/constants";
 
 export const toggleMultiple = (value: any) => {
     if(value instanceof Array) {
@@ -67,13 +68,29 @@ export const splitMultiple = (value: string) => {
     return value
 };
 
+export const replaceEvery = (value: string) => value.replace('*/', '');
+
 export const parseCronExpression = (expression: string) => {
     const [minutes, hours, dayOfMonth, month, dayOfWeek] = expression.split(' ');
     return {
-        minutes: splitMultiple(minutes),
-        hours: splitMultiple(hours),
+        minutes: splitMultiple(replaceEvery(minutes)),
+        hours: splitMultiple(replaceEvery(hours)),
         dayOfMonth: splitMultiple(dayOfMonth),
         month: splitMultiple(month),
         dayOfWeek: splitMultiple(dayOfWeek)
     }
+};
+
+export const addLeadingZero = (el: any) => `0${el}`.slice(-2);
+
+export const addLeadingZeroToOption = (option: Option) => {
+    const {value, label} = option;
+    return {
+        label: addLeadingZero(label),
+        value
+    }
+};
+
+export const defaultTo = (item: string, defaultItem: string) => {
+    return item === EVERY ? defaultItem : item
 };

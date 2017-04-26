@@ -5,6 +5,8 @@ import Select from 'react-select'
 import type {Option} from 'types/Option'
 import {parseTimeValue, getValues, getValue} from 'utils'
 
+import 'react-select/dist/react-select.css'
+
 type Props = {
     value: any,
     options: Array<Option>,
@@ -12,7 +14,7 @@ type Props = {
     onChange: Function
 }
 
-export default class DateInput extends PureComponent {
+export default class TimeInput extends PureComponent {
     props: Props;
 
     onChange = (onChange: Function) => {

@@ -3,11 +3,11 @@
 import {PureComponent} from 'react'
 import pick from 'lodash/pick'
 import {MINUTES, EVERY} from 'data/constants'
-import {isMultiple, ensureMultiple} from 'utils'
+import {isMultiple, ensureMultiple, replaceEvery} from 'utils'
 import type {PresetTabState} from './types/PresetTabState'
 import type {PresetTabProps} from './types/PresetTabProps'
 
-const ensureEveryOn = (value: any, multiple: boolean) => {
+export const ensureEveryOn = (value: any, multiple: boolean) => {
     const process = (item: any) => {
         if(item === EVERY) {
             return item
@@ -15,8 +15,8 @@ const ensureEveryOn = (value: any, multiple: boolean) => {
         if(item.includes('-')) {
             return item
         }
-        if(multiple || (!multiple && item.includes('/'))) {
-            return item.replace('*/', '')
+        if(multiple && item.includes('/')) {
+            return replaceEvery(item)
         }
         if(!multiple && !item.includes('/')) {
             return `*/${item}`
@@ -42,8 +42,8 @@ export default class PresetTab extends PureComponent {
             activeTime: MINUTES,
             minutesMultiple,
             hoursMultiple,
-            minutes: ensureEveryOn(minutes, minutesMultiple),
-            hours: ensureEveryOn(hours, hoursMultiple)
+            minutes,
+            hours
         };
     }
 

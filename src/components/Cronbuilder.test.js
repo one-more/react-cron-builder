@@ -4,6 +4,8 @@ import {mount} from 'enzyme'
 import CronBuilder from './CronBuilder'
 import Tab from './components/Tab'
 import PeriodicallyTab from './components/PeriodicallyTab'
+import PeriodicallyFrameTab from './components/PeriodicallyFrameTab'
+import FixedTimeTab from './components/FixedTimeTab'
 import {EVERY, MINUTES} from '../data/constants'
 
 describe('CronBuilder', () => {
@@ -38,5 +40,49 @@ describe('CronBuilder', () => {
         />);
         wrapper.find('[data-action]').simulate('click');
         expect(onChange).toHaveBeenCalledWith(expression)
+    });
+
+    it('should set active tab 1', () => {
+        const wrapper = mount(<CronBuilder
+            cronExpression={'25 17-21 4 2 6-7'}
+        />);
+        expect(wrapper.instance().presetComponent.state).toEqual({
+            minutes: '25',
+            hours: '17-21',
+            hoursFrom: '17',
+            hoursTo: '21',
+            dayOfWeek: '6-7',
+            dayOfMonth: '4',
+            month: '2',
+            activeTime: MINUTES,
+            minutesMultiple: false,
+            hoursMultiple: false
+        });
+        expect(wrapper.state().activeIndex).toEqual(1);
+    });
+
+    it('should switch tabs', () => {
+        const wrapper = mount(<CronBuilder />);
+        wrapper.find('legend').find(Tab).at(1).simulate('click');
+        expect(wrapper.find(PeriodicallyFrameTab)).toHaveLength(1);
+        wrapper.find('legend').find(Tab).at(2).simulate('click');
+        expect(wrapper.find(FixedTimeTab)).toHaveLength(1);
+    });
+
+    it('should correctly set state for the 3rd tab', () => {
+        const wrapper = mount(<CronBuilder
+            cronExpression={'48 6 24 6 2'}
+        />);
+        wrapper.find('legend').find(Tab).at(2).simulate('click');
+        expect(wrapper.instance().presetComponent.state).toEqual({
+            minutes: '48',
+            hours: '6',
+            dayOfWeek: '2',
+            dayOfMonth: '24',
+            month: '6',
+            activeTime: MINUTES,
+            minutesMultiple: true,
+            hoursMultiple: true
+        });
     })
 });

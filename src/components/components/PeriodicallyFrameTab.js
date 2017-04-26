@@ -2,7 +2,7 @@
 
 import React from 'react'
 import range from 'lodash/range'
-import {toOptions} from 'utils'
+import {toOptions, defaultTo} from 'utils'
 import type {Option} from 'types/Option'
 import PresetTab from './PresetTab'
 import MultipleSwitcher from './MultipleSwitcher'
@@ -43,12 +43,16 @@ export default class PeriodicallyFrameTab extends PresetTab {
     constructor(props: PresetTabProps, ctx: Object) {
         super(props, ctx);
         const {state} = this;
+        let {hours, minutes} = state;
+        minutes = defaultTo(minutes, '6');
+        hours = defaultTo(hours, '9-18');
+        const [hoursFrom, hoursTo] = hours.split('-');
         this.state = {
             ...state,
-            minutes: '6',
-            hours: '9-18',
-            hoursFrom: '9',
-            hoursTo: '18'
+            minutes,
+            hours,
+            hoursFrom,
+            hoursTo
         }
     }
 

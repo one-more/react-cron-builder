@@ -24,7 +24,7 @@ export default class MultipleSwitcher extends PureComponent {
         return (
             <div>
                 <div
-                    {...styleNameFactory('row')}
+                    {...styleNameFactory('row', 'inline')}
                     onClick={onChange}
                     data-multiple-switcher
                 >
