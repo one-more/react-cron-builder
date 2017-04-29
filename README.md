@@ -11,6 +11,7 @@ npm install --save react-cron-builder
 ## usage
 ```` ecmascript 6
 import CronBuilder from  'react-cron-builder
+import 'react-cron-builder/dist/bundle.css'
 
 <CronBuilder 
     cronExpression="*/4 2,12,22 * * 1-5"

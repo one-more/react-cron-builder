@@ -1,12 +1,13 @@
 // @flow
 
 import React, {PureComponent, Children} from 'react'
-import {If, Then, Else} from 'react-if'
+import {If, Then} from 'react-if'
 import {EVERY} from 'data/constants'
 import head from 'lodash/head'
 import type {Option} from 'types/Option'
 import {getValues} from 'utils'
 import Select from '../Select'
+import {DayOfWeek, DayOfMonth, Month} from './index'
 
 type Props = {
     styleNameFactory: any,
@@ -14,7 +15,7 @@ type Props = {
 }
 
 type State = {
-    expanded: boolean
+    activeComponent: React.Children
 }
 
 export default class DateComponent extends PureComponent {
@@ -23,15 +24,15 @@ export default class DateComponent extends PureComponent {
     };
 
     state: State = {
-        expanded: false
+        activeComponent: DayOfWeek
     };
 
     props: Props;
 
-    toggleExpand = () => {
-        this.setState(({expanded}: State) => ({
-            expanded: !expanded
-        }))
+    setActiveComponent = ({target: {value}}: any) => {
+        this.setState({
+            activeComponent: value
+        })
     };
 
     onChange = (onChange: Function) => {
@@ -53,7 +54,7 @@ export default class DateComponent extends PureComponent {
 
     render() {
         const {styleNameFactory, children} = this.props;
-        const {expanded} = this.state;
+        const {activeComponent} = this.state;
         return (
             <div
                 style={{position: 'relative'}}
@@ -61,17 +62,18 @@ export default class DateComponent extends PureComponent {
                 <label {...styleNameFactory('label')} >
                     On:
                 </label>
-                <div {...styleNameFactory('row')} >
-                    {Children.map(children, (child: React.Children, i: number) => {
+                <div {...styleNameFactory('row', 'items-end')} >
+                    {Children.map(children, (child: React.Children) => {
                         const {value, onChange} = child.props;
                         const {getOptions} = child.type;
                         return (
-                            <If condition={i === 0 || expanded} >
+                            <If condition={child.type == activeComponent} >
                                 <Then>
                                     <div
                                         {...styleNameFactory('input')}
                                     >
                                         <Select
+                                            style={{minWidth: 120}}
                                             value={value}
                                             options={getOptions()}
                                             multi
@@ -87,17 +89,12 @@ export default class DateComponent extends PureComponent {
                 <div
                     style={{position: 'absolute'}}
                     {...styleNameFactory('link')}
-                    onClick={this.toggleExpand}
-                    data-expand
                 >
-                    <If condition={expanded} >
-                        <Then>
-                            <span>show less &laquo;</span>
-                        </Then>
-                        <Else>
-                            <span>show more &raquo;</span>
-                        </Else>
-                    </If>
+                    <select onChange={this.setActiveComponent} >
+                        <option value={DayOfWeek}>day of week</option>
+                        <option value={DayOfMonth}>day of month</option>
+                        <option value={Month}>month</option>
+                    </select>
                 </div>
             </div>
         )

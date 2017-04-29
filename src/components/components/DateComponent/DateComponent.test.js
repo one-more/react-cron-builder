@@ -26,6 +26,7 @@ describe('DateComponent', () => {
             const {dow, dom, month} = this.state;
             return (
                 <DateComponent
+                    ref={el => this.dateComponent = el}
                     styleNameFactory={jest.fn()}
                 >
                     <DayOfWeek
@@ -48,23 +49,40 @@ describe('DateComponent', () => {
     it('initial rendering', () => {
         const wrapper = mount(<Wrapper />);
         expect(wrapper.find(Select)).toHaveLength(1);
-        expect(wrapper.find('[data-expand]')).toHaveLength(1);
+        expect(wrapper.find('select')).toHaveLength(1);
     });
 
-    it('should toggle expand', () => {
+    it('should switch components', () => {
         const wrapper = mount(<Wrapper />);
-        wrapper.find('[data-expand]').simulate('click');
-        expect(wrapper.find(Select)).toHaveLength(3);
-        wrapper.find('[data-expand]').simulate('click');
-        expect(wrapper.find(Select)).toHaveLength(1);
+        wrapper.find('select').simulate('click');
+        expect(wrapper.find('option')).toHaveLength(3);
+        wrapper.find('select').simulate('change', {
+            target: {
+                value: DayOfMonth
+            }
+        });
+        expect(wrapper.instance().dateComponent.state.activeComponent).toEqual(DayOfMonth);
+        wrapper.find('select').simulate('change', {
+            target: {
+                value: Month
+            }
+        });
+        expect(wrapper.instance().dateComponent.state.activeComponent).toEqual(Month);
     });
 
     it('should toggle every and other values', () => {
         const wrapper = mount(<Wrapper />);
-        wrapper.find('[data-expand]').simulate('click');
 
+        const components = [DayOfWeek, DayOfMonth, Month];
+        const onChangeComponent = wrapper.find('select').props().onChange;
+        const changeComponent = component => onChangeComponent({
+            target: {
+                value: component
+            }
+        });
         for(let i = 0; i < 3; i++) {
-            const input = wrapper.find(Select).at(i);
+            changeComponent(components[i]);
+            const input = wrapper.find(Select);
             const {options, onChange} = input.props();
             const expectedOptions = [options[2], options[3]];
             onChange([options[0]].concat(expectedOptions));

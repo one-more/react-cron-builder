@@ -4,7 +4,7 @@ import {parseCronExpression} from 'utils'
 import Select from 'react-select'
 import FixedTimeTab from './FixedTimeTab'
 import TimeInput from './components/TimeInput'
-import DateComponent from './components/DateComponent'
+import DateComponent, {DayOfMonth, Month} from './components/DateComponent'
 
 describe('FixedTimeTab', () => {
     const expression = parseCronExpression('* * * * *');
@@ -49,7 +49,7 @@ describe('FixedTimeTab', () => {
             expression={expression}
         />);
 
-        wrapper.find(Select).at(2).props().onChange([{
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);
@@ -62,8 +62,12 @@ describe('FixedTimeTab', () => {
             expression={expression}
         />);
 
-        wrapper.find(DateComponent).find('[data-expand]').simulate('click');
-        wrapper.find(Select).at(3).props().onChange([{
+        wrapper.find(DateComponent).find('select').simulate('change', {
+            target: {
+                value: DayOfMonth
+            }
+        });
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);
@@ -76,8 +80,12 @@ describe('FixedTimeTab', () => {
             expression={expression}
         />);
 
-        wrapper.find(DateComponent).find('[data-expand]').simulate('click');
-        wrapper.find(Select).at(4).props().onChange([{
+        wrapper.find(DateComponent).find('select').simulate('change', {
+            target: {
+                value: Month
+            }
+        });
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);

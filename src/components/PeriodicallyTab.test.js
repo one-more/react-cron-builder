@@ -7,13 +7,13 @@ import {MINUTES, HOURS} from 'data/constants'
 import PeriodicallyTab from './PeriodicallyTab'
 import MultipleSwitcher from './MultipleSwitcher'
 import Tab from './Tab'
-import DateComponent from './components/DateComponent'
+import DateComponent, {DayOfMonth, Month} from './components/DateComponent'
 
 describe('PeriodicallyTab', () => {
     const expression = parseCronExpression('* * * * *');
+    const styleNameFactory = jest.fn();
 
     it('initial rendering', () => {
-        const styleNameFactory = jest.fn();
         const wrapper = mount(<PeriodicallyTab
             styleNameFactory={styleNameFactory}
             expression={expression}
@@ -28,7 +28,6 @@ describe('PeriodicallyTab', () => {
     });
 
     it('switch multiple minutes', () => {
-        const styleNameFactory = jest.fn();
         const wrapper = mount(<PeriodicallyTab
             styleNameFactory={styleNameFactory}
             expression={expression}
@@ -46,7 +45,6 @@ describe('PeriodicallyTab', () => {
     });
 
     it('switch multiple hours', () => {
-        const styleNameFactory = jest.fn();
         const wrapper = mount(<PeriodicallyTab
             styleNameFactory={styleNameFactory}
             expression={expression}
@@ -66,7 +64,6 @@ describe('PeriodicallyTab', () => {
 
 
     it('switch minutes to hours', () => {
-        const styleNameFactory = jest.fn();
         const wrapper = mount(<PeriodicallyTab
             styleNameFactory={styleNameFactory}
             expression={expression}
@@ -82,7 +79,6 @@ describe('PeriodicallyTab', () => {
     });
 
     it('should select minutes and hours', () => {
-        const styleNameFactory = jest.fn();
         const wrapper = mount(<PeriodicallyTab
             styleNameFactory={styleNameFactory}
             expression={expression}
@@ -98,13 +94,12 @@ describe('PeriodicallyTab', () => {
     });
 
     it('should select day of week', () => {
-        const styleNameFactory = jest.fn();
         const wrapper = mount(<PeriodicallyTab
             styleNameFactory={styleNameFactory}
             expression={expression}
         />);
 
-        wrapper.find(Select).at(1).props().onChange([{
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);
@@ -112,14 +107,17 @@ describe('PeriodicallyTab', () => {
     });
 
     it('should select day of month', () => {
-        const styleNameFactory = jest.fn();
         const wrapper = mount(<PeriodicallyTab
             styleNameFactory={styleNameFactory}
             expression={expression}
         />);
 
-        wrapper.find(DateComponent).find('[data-expand]').simulate('click');
-        wrapper.find(Select).at(2).props().onChange([{
+        wrapper.find(DateComponent).find('select').simulate('change', {
+            target: {
+                value: DayOfMonth
+            }
+        });
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);
@@ -127,14 +125,17 @@ describe('PeriodicallyTab', () => {
     });
 
     it('should select month', () => {
-        const styleNameFactory = jest.fn();
         const wrapper = mount(<PeriodicallyTab
             styleNameFactory={styleNameFactory}
             expression={expression}
         />);
 
-        wrapper.find(DateComponent).find('[data-expand]').simulate('click');
-        wrapper.find(Select).at(3).props().onChange([{
+        wrapper.find(DateComponent).find('select').simulate('change', {
+            target: {
+                value: Month
+            }
+        });
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);

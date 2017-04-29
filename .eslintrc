@@ -65,7 +65,8 @@
         "react/sort-comp": 0,
         "no-plusplus": 0,
         "no-return-assign": 0,
-        "one-var": 0
+        "one-var": 0,
+        "eqeqeq": 0
     },
     "settings": {
         "import/resolver": {

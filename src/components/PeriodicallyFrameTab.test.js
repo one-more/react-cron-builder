@@ -5,7 +5,7 @@ import Select from 'react-select'
 import PeriodicallyFrameTab from './PeriodicallyFrameTab'
 import MultipleSwitcher from './MultipleSwitcher'
 import TimeInput from './components/TimeInput'
-import DateComponent from './components/DateComponent'
+import DateComponent, {DayOfMonth, Month} from './components/DateComponent'
 
 describe('PeriodicallyFrameTab', () => {
     const expression = parseCronExpression('* * * * *');
@@ -54,7 +54,7 @@ describe('PeriodicallyFrameTab', () => {
             expression={expression}
         />);
 
-        wrapper.find(Select).at(3).props().onChange([{
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);
@@ -67,8 +67,12 @@ describe('PeriodicallyFrameTab', () => {
             expression={expression}
         />);
 
-        wrapper.find(DateComponent).find('[data-expand]').simulate('click');
-        wrapper.find(Select).at(4).props().onChange([{
+        wrapper.find(DateComponent).find('select').simulate('change', {
+            target: {
+                value: DayOfMonth
+            }
+        });
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);
@@ -81,8 +85,12 @@ describe('PeriodicallyFrameTab', () => {
             expression={expression}
         />);
 
-        wrapper.find(DateComponent).find('[data-expand]').simulate('click');
-        wrapper.find(Select).at(5).props().onChange([{
+        wrapper.find(DateComponent).find('select').simulate('change', {
+            target: {
+                value: Month
+            }
+        });
+        wrapper.find(DateComponent).find(Select).props().onChange([{
             label: '2',
             value: '2'
         }]);
