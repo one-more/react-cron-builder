@@ -66,14 +66,15 @@
         "test": "jest --coverage",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
-        "build": "cross-env NODE_ENV=production webpack --progress -p",
+        "build": "cross-env NODE_ENV=production webpack --progress",
+        "build-prod": "cross-env NODE_ENV=production webpack -p",
         "deploy-storybook": "storybook-to-ghpages",
         "git-add": "git add -u"
     },
     "pre-commit": {
         "silent": true,
         "run": [
-            "build",
+            "build-prod",
             "test",
             "git-add"
         ]
