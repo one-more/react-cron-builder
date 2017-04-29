@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@kadira/storybook": "^2.35.3",
+    "@kadira/storybook-deployer": "^1.2.0",
     "autoprefixer": "^6.7.7",
     "babel-core": "*",
     "babel-eslint": "^7.2.2",
@@ -64,7 +65,8 @@
     "test": "jest --coverage",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build": "cross-env NODE_ENV=production webpack --progress -p"
+    "build": "cross-env NODE_ENV=production webpack --progress -p",
+    "deploy-storybook": "storybook-to-ghpages"
   },
   "jest": {
     "modulePaths": [

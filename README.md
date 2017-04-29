@@ -5,6 +5,8 @@ React component to build [cron](https://ru.wikipedia.org/wiki/Cron) expression
 ```` bash
 npm install --save react-cron-builder
 ````
+## demo
+[Live demo](https://one-more.github.io/react-cron-builder/)
 
 ## usage
 ```` ecmascript 6
