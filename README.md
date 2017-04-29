@@ -19,3 +19,5 @@ import 'react-cron-builder/dist/bundle.css'
     showResult={false}
 />
 ````
+
+component was inspired by [this util](https://abunchofutils.com/u/computing/cron-format-helper/) 
