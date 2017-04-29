@@ -19,7 +19,8 @@
         "cronstrue": "^0.10.3",
         "react-if": "^2.1.0",
         "react-select": "^1.0.0-rc.2",
-        "react-bem-helper": "^1.4.1"
+        "react-bem-helper": "^1.4.1",
+        "normalize.css": "^6.0.0"
     },
     "devDependencies": {
         "@kadira/storybook": "^2.35.3",
@@ -52,7 +53,6 @@
         "flow-babel-webpack-plugin": "^1.0.1",
         "flow-bin": "^0.44.2",
         "jest": "^17.0.3",
-        "normalize.css": "^6.0.0",
         "pre-commit": "^1.2.2",
         "react": "^15.5.4",
         "react-addons-test-utils": "^15.4.1",
@@ -69,7 +69,8 @@
         "build": "cross-env NODE_ENV=production webpack --progress",
         "build-prod": "cross-env NODE_ENV=production webpack -p",
         "deploy-storybook": "storybook-to-ghpages",
-        "git-add": "git add -u"
+        "git-add": "git add -u",
+        "flow": "flow"
     },
     "pre-commit": {
         "silent": true,

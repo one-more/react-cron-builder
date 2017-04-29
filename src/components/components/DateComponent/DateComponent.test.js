@@ -77,7 +77,7 @@ describe('DateComponent', () => {
         const onChangeComponent = wrapper.find('select').props().onChange;
         const changeComponent = component => onChangeComponent({
             target: {
-                value: component
+                value: component.className
             }
         });
         for(let i = 0; i < 3; i++) {

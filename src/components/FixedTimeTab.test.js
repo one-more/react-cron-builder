@@ -64,7 +64,7 @@ describe('FixedTimeTab', () => {
 
         wrapper.find(DateComponent).find('select').simulate('change', {
             target: {
-                value: DayOfMonth
+                value: DayOfMonth.className
             }
         });
         wrapper.find(DateComponent).find(Select).props().onChange([{
@@ -82,7 +82,7 @@ describe('FixedTimeTab', () => {
 
         wrapper.find(DateComponent).find('select').simulate('change', {
             target: {
-                value: Month
+                value: Month.className
             }
         });
         wrapper.find(DateComponent).find(Select).props().onChange([{

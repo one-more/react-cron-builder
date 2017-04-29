@@ -22,4 +22,6 @@ export default class Month extends PureComponent {
     static getOptions() {
         return options
     }
+
+    static className: string = 'Month';
 }

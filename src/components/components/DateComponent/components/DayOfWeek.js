@@ -30,4 +30,6 @@ export default class DayOfWeek extends PureComponent {
     static getOptions() {
         return options
     }
+
+    static className: string = 'DayOfWeek';
 }

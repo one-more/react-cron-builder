@@ -24,7 +24,7 @@ export default class DateComponent extends PureComponent {
     };
 
     state: State = {
-        activeComponent: DayOfWeek
+        activeComponent: DayOfWeek.className
     };
 
     props: Props;
@@ -67,7 +67,7 @@ export default class DateComponent extends PureComponent {
                         const {value, onChange} = child.props;
                         const {getOptions} = child.type;
                         return (
-                            <If condition={child.type == activeComponent} >
+                            <If condition={child.type.className === activeComponent} >
                                 <Then>
                                     <div
                                         {...styleNameFactory('input')}
@@ -91,9 +91,9 @@ export default class DateComponent extends PureComponent {
                     {...styleNameFactory('link')}
                 >
                     <select onChange={this.setActiveComponent} >
-                        <option value={DayOfWeek}>day of week</option>
-                        <option value={DayOfMonth}>day of month</option>
-                        <option value={Month}>month</option>
+                        <option value={DayOfWeek.className}>day of week</option>
+                        <option value={DayOfMonth.className}>day of month</option>
+                        <option value={Month.className}>month</option>
                     </select>
                 </div>
             </div>
