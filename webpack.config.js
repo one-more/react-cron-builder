@@ -1,68 +1,67 @@
-'use strict';
-
 const webpack = require('webpack'),
-    nib = require('nib'),
-    ExtractTextPlugin = require("extract-text-webpack-plugin");
+    ExtractTextPlugin = require('extract-text-webpack-plugin'),
+    path = require('path');
 
 module.exports = {
+    context: __dirname,
     entry: './src/index.js',
     output: {
-        path: './dist',
-        filename: 'bundle.js'
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js',
+        libraryTarget: 'umd',
+        library: 'react-cron-builder',
+        publicPath: '/dist/'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                exclude: [/node_modules/, /bower_components/],
-                loader: 'babel-loader'
+                exclude: [/node_modules/],
+                use: 'babel-loader'
             },
             {
                 test: /\.styl$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!stylus-loader')
+                use: ExtractTextPlugin.extract(['css-loader', 'stylus-loader'])
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
-            },
-            {
-                test: /\.json$/,
-                exclude: /node_modules/,
-                loader: 'json-loader'
+                use: ExtractTextPlugin.extract(['css-loader'])
             }
-        ],
-        resolve: {
-            extensions: ['', '.js', '.styl']
-        }
+        ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-            },
-            output: {
-                comments: false,
-            },
-        }),
-        new webpack.ResolverPlugin(
-            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
-        ),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
         }),
-        new ExtractTextPlugin('bundle.css', {
-            allChunks: false
-        })
+        new ExtractTextPlugin('bundle.css')
     ],
     resolve: {
-        modulesDirectories: ["web_modules", "node_modules", "bower_components"],
-        root: process.cwd() + '/src'
+        modules: [
+            'node_modules',
+            path.join(__dirname, 'src')
+        ],
+        extensions: ['.js', '.styl', 'css']
     },
-    stylus: {
-        include: [process.cwd()+'/src/styles/includes'],
-        import: ['_variables', '~nib/lib/nib/index.styl'],
-        use: nib()
+    externals: {
+        react: {
+            commonjs: 'react',
+            commonjs2: 'react',
+            amd: 'react',
+            root: 'React'
+        },
+        'react-dom': {
+            commonjs: 'react-dom',
+            commonjs2: 'react-dom',
+            amd: 'react-dom',
+            root: 'ReactDom'
+        },
+        lodash: {
+            commonjs: 'lodash',
+            commonjs2: 'lodash',
+            amd: 'lodash',
+            root: '_'
+        }
     }
 };

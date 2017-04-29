@@ -1,16 +1,22 @@
 {
+  "name": "react-cron-builder",
+  "version": "1.0.0",
   "main": "dist/bundle.js",
   "description": "react component to create cron expression",
   "repository": "https://github.com/one-more/react-cron-builder",
   "license": "ISC",
+  "author": "one-more",
+  "bugs": {
+    "url": "https://github.com/one-more/react-cron-builder/issues"
+  },
+  "homepage": "https://github.com/one-more/react-cron-builder#readme",
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*"
+    "lodash": "^4.17.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "cronstrue": "^0.10.3",
-    "lodash": "^4.17.2",
     "react-if": "^2.1.0",
     "react-select": "^1.0.0-rc.2",
     "react-bem-helper": "^1.4.1"
@@ -41,26 +47,24 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^2.1.0",
     "flow-babel-webpack-plugin": "^1.0.1",
     "flow-bin": "^0.44.2",
     "jest": "^17.0.3",
-    "json-loader": "^0.5.4",
-    "nib": "*",
     "normalize.css": "^6.0.0",
     "react": "^15.5.4",
     "react-addons-test-utils": "^15.4.1",
-    "react-dom": "^15.5.4",
     "resolve-url-loader": "^2.0.2",
     "style-loader": "^0.13.1",
-    "stylus": "*",
-    "stylus-loader": "*",
-    "webpack": "*"
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "webpack": "^2.4.1"
   },
   "scripts": {
     "test": "jest --coverage",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "build": "cross-env NODE_ENV=production webpack --progress -p"
   },
   "jest": {
     "modulePaths": [

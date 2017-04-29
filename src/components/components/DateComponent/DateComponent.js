@@ -1,12 +1,12 @@
 // @flow
 
 import React, {PureComponent, Children} from 'react'
-import Select from 'react-select'
 import {If, Then, Else} from 'react-if'
 import {EVERY} from 'data/constants'
 import head from 'lodash/head'
 import type {Option} from 'types/Option'
 import {getValues} from 'utils'
+import Select from '../Select'
 
 type Props = {
     styleNameFactory: any,

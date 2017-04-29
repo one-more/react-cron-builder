@@ -1,11 +1,9 @@
 // @flow
 
 import React, {PureComponent} from 'react'
-import Select from 'react-select'
 import type {Option} from 'types/Option'
 import {parseTimeValue, getValues, getValue} from 'utils'
-
-import 'react-select/dist/react-select.css'
+import Select from './Select'
 
 type Props = {
     value: any,

@@ -6,7 +6,7 @@ import Tab from './components/Tab'
 import PeriodicallyTab from './components/PeriodicallyTab'
 import PeriodicallyFrameTab from './components/PeriodicallyFrameTab'
 import FixedTimeTab from './components/FixedTimeTab'
-import {EVERY, MINUTES} from '../data/constants'
+import {EVERY, MINUTES} from './data/constants'
 
 describe('CronBuilder', () => {
     it('initial render', () => {
@@ -39,7 +39,8 @@ describe('CronBuilder', () => {
             onChange={onChange}
         />);
         wrapper.find('[data-action]').simulate('click');
-        expect(onChange).toHaveBeenCalledWith(expression)
+        expect(onChange).toHaveBeenCalledWith(expression);
+        expect(wrapper.find('[data-result]')).toHaveLength(1)
     });
 
     it('should set active tab 1', () => {
@@ -84,5 +85,14 @@ describe('CronBuilder', () => {
             minutesMultiple: true,
             hoursMultiple: true
         });
+    });
+
+    it('should not show result if flag is false', () => {
+        const wrapper = mount(<CronBuilder
+            cronExpression={'48 6 24 6 2'}
+            showResult={false}
+        />);
+        wrapper.find('[data-action]').simulate('click');
+        expect(wrapper.find('[data-result]')).toHaveLength(0)
     })
 });
