@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import {toOptions, addLeadingZeroToOption, defaultTo} from 'utils'
+import {toOptions, addLeadingZeroToOption, defaultTo, ensureMultiple, rangeHoursToSingle} from 'utils'
 import range from 'lodash/range'
 import PresetTab from './PresetTab'
 import TimeInput from './components/TimeInput'
@@ -14,9 +14,12 @@ const minutesOptions = toOptions(range(0, 60)).map(addLeadingZeroToOption);
 export default class FixedTimeTab extends PresetTab {
     constructor(props: PresetTabProps, ctx: Object) {
         super(props, ctx);
-        const {hours, minutes} = this.state;
-        this.state.hours = defaultTo(hours, '8');
-        this.state.minutes = defaultTo(minutes, '45');
+        let {hours, minutes} = this.state;
+        hours = ensureMultiple(hours, false);
+        hours = rangeHoursToSingle(hours);
+        minutes = ensureMultiple(minutes, false);
+        this.state.hours = defaultTo(String(hours), '8');
+        this.state.minutes = defaultTo(String(minutes), '45');
         this.state.minutesMultiple = true;
         this.state.hoursMultiple = true;
     }

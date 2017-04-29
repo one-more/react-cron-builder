@@ -22,7 +22,7 @@ describe('CronBuilder', () => {
         expect(wrapper.instance().presetComponent.state).toEqual({
             minutes: ['5', '15', '25'],
             hours: '2',
-            dayOfWeek: '1-5',
+            dayOfWeek: ['1-5'],
             dayOfMonth: EVERY,
             month: EVERY,
             activeTime: MINUTES,
@@ -48,15 +48,15 @@ describe('CronBuilder', () => {
             cronExpression={'25 17-21 4 2 6-7'}
         />);
         expect(wrapper.instance().presetComponent.state).toEqual({
-            minutes: '25',
+            minutes: ['25'],
             hours: '17-21',
             hoursFrom: '17',
             hoursTo: '21',
-            dayOfWeek: '6-7',
-            dayOfMonth: '4',
-            month: '2',
+            dayOfWeek: ['6-7'],
+            dayOfMonth: ['4'],
+            month: ['2'],
             activeTime: MINUTES,
-            minutesMultiple: false,
+            minutesMultiple: true,
             hoursMultiple: false
         });
         expect(wrapper.state().activeIndex).toEqual(1);
@@ -78,9 +78,9 @@ describe('CronBuilder', () => {
         expect(wrapper.instance().presetComponent.state).toEqual({
             minutes: '48',
             hours: '6',
-            dayOfWeek: '2',
-            dayOfMonth: '24',
-            month: '6',
+            dayOfWeek: ['2'],
+            dayOfMonth: ['24'],
+            month: ['6'],
             activeTime: MINUTES,
             minutesMultiple: true,
             hoursMultiple: true
@@ -94,5 +94,98 @@ describe('CronBuilder', () => {
         />);
         wrapper.find('[data-action]').simulate('click');
         expect(wrapper.find('[data-result]')).toHaveLength(0)
+    });
+
+    it('should should correctly parse single value when it is not every', () => {
+        const wrapper = mount(<CronBuilder
+            cronExpression={'48 6 24 6 2'}
+            showResult={false}
+        />);
+        expect(wrapper.instance().presetComponent.state).toEqual({
+            minutes: ['48'],
+            hours: ['6'],
+            dayOfWeek: ['2'],
+            dayOfMonth: ['24'],
+            month: ['6'],
+            activeTime: MINUTES,
+            minutesMultiple: true,
+            hoursMultiple: true
+        });
+    });
+
+    it('frame tab should correctly parse multiple hours', () => {
+        const wrapper = mount(<CronBuilder
+            cronExpression={'48 6 24 6 2'}
+            showResult={false}
+        />);
+        wrapper.find(Tab).at(1).simulate('click');
+        expect(wrapper.instance().presetComponent.state).toEqual({
+            minutes: ['48'],
+            hours: '6-18',
+            hoursFrom: '6',
+            hoursTo: '18',
+            dayOfWeek: ['2'],
+            dayOfMonth: ['24'],
+            month: ['6'],
+            activeTime: MINUTES,
+            minutesMultiple: true,
+            hoursMultiple: true
+        });
+    });
+
+    it('frame tab should correctly parse single hours', () => {
+        const wrapper = mount(<CronBuilder
+            cronExpression={'48 */6 24 6 2'}
+            showResult={false}
+        />);
+        wrapper.find(Tab).at(1).simulate('click');
+        expect(wrapper.instance().presetComponent.state).toEqual({
+            minutes: ['48'],
+            hours: '6-18',
+            hoursFrom: '6',
+            hoursTo: '18',
+            dayOfWeek: ['2'],
+            dayOfMonth: ['24'],
+            month: ['6'],
+            activeTime: MINUTES,
+            minutesMultiple: true,
+            hoursMultiple: false
+        });
+    });
+
+    it('periodically tab should parse range hours to single', () => {
+        const wrapper = mount(<CronBuilder
+            cronExpression={'48 12-20 24 6 2'}
+            showResult={false}
+        />);
+        wrapper.find(Tab).at(0).simulate('click');
+        expect(wrapper.instance().presetComponent.state).toEqual({
+            minutes: ['48'],
+            hours: '12',
+            dayOfWeek: ['2'],
+            dayOfMonth: ['24'],
+            month: ['6'],
+            activeTime: MINUTES,
+            minutesMultiple: true,
+            hoursMultiple: false
+        });
+    });
+
+    it('fixed time tab should parse range hours to single', () => {
+        const wrapper = mount(<CronBuilder
+            cronExpression={'48 12-20 24 6 2'}
+            showResult={false}
+        />);
+        wrapper.find(Tab).at(2).simulate('click');
+        expect(wrapper.instance().presetComponent.state).toEqual({
+            minutes: '48',
+            hours: '12',
+            dayOfWeek: ['2'],
+            dayOfMonth: ['24'],
+            month: ['6'],
+            activeTime: MINUTES,
+            minutesMultiple: true,
+            hoursMultiple: true
+        });
     })
 });

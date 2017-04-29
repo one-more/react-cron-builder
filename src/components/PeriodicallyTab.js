@@ -3,13 +3,14 @@
 import React from 'react'
 import {If, Then, Else} from 'react-if'
 import {MINUTES} from 'data/constants'
-import {isMultiple, toggleDateType, toOptions} from 'utils'
+import {isMultiple, toggleDateType, toOptions, rangeHoursToSingle} from 'utils'
 import range from 'lodash/range'
 import MultipleSwitcher from './MultipleSwitcher'
 import TimeInput from './components/TimeInput'
 import DateComponent, {DayOfWeek, DayOfMonth, Month} from './components/DateComponent'
 import PresetTab from './PresetTab'
 import type {PresetTabState} from './types/PresetTabState'
+import type {PresetTabProps} from './types/PresetTabProps'
 
 const minutesOptions = toOptions(range(1, 60));
 const hoursOptions = toOptions(range(0, 24));
@@ -19,6 +20,12 @@ const isMinutes = (activeTime: string) => activeTime === MINUTES;
 const timeInputProps = {style: {minWidth: 75}};
 
 export default class PeriodicallyTab extends PresetTab {
+    constructor(props: PresetTabProps, ctx: Object) {
+        super(props, ctx);
+        const {hours} = this.state;
+        this.state.hours = rangeHoursToSingle(hours)
+    }
+
 
     toggleActiveTime = () => {
         this.setState(({activeTime}: PresetTabState) => ({

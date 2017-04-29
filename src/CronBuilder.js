@@ -11,7 +11,6 @@ import PeriodicallyTab from './components/PeriodicallyTab'
 import PeriodicallyFrameTab from './components/PeriodicallyFrameTab'
 import FixedTimeTab from './components/FixedTimeTab'
 
-import 'normalize.css'
 import './cron-builder.styl'
 
 const styleNameFactory = new BEMHelper('cron-builder');

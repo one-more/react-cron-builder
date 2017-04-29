@@ -5,8 +5,7 @@ import type {CronExpression} from 'types/CronExpression'
 
 import head from 'lodash/head'
 import values from 'lodash/values'
-import {MINUTES, HOURS} from 'data/constants'
-import {EVERY} from "../data/constants";
+import {MINUTES, HOURS, EVERY} from 'data/constants'
 
 export const toggleMultiple = (value: any) => {
     if(value instanceof Array) {
@@ -61,24 +60,45 @@ export const generateCronExpression = (expression: CronExpression) => {
     return values(expression).join(' ')
 };
 
-export const splitMultiple = (value: string) => {
+export const splitMultiple = (value: string, field: ?string = undefined) => {
     if(value.includes(',')) {
         return value.split(',')
+    }
+    if(value.includes('/')) {
+        return value
+    }
+    if(value.includes('-') && field === HOURS) {
+        return value
+    }
+    if(value === EVERY) {
+        return value
+    }
+    return [value]
+};
+
+export const replaceEvery = (value: any) => {
+    if(typeof value === 'string') {
+        return value.replace('*/', '')
     }
     return value
 };
 
-export const replaceEvery = (value: string) => value.replace('*/', '');
-
 export const parseCronExpression = (expression: string) => {
     const [minutes, hours, dayOfMonth, month, dayOfWeek] = expression.split(' ');
-    return {
-        minutes: splitMultiple(replaceEvery(minutes)),
-        hours: splitMultiple(replaceEvery(hours)),
+    const defaultExpression = {
+        minutes: EVERY,
+        hours: EVERY,
+        dayOfMonth: EVERY,
+        month: EVERY,
+        dayOfWeek: EVERY
+    };
+    return Object.assign(defaultExpression, {
+        minutes: replaceEvery(splitMultiple(minutes)),
+        hours: replaceEvery(splitMultiple(hours, HOURS)),
         dayOfMonth: splitMultiple(dayOfMonth),
         month: splitMultiple(month),
         dayOfWeek: splitMultiple(dayOfWeek)
-    }
+    })
 };
 
 export const addLeadingZero = (el: any) => `0${el}`.slice(-2);
@@ -92,5 +112,13 @@ export const addLeadingZeroToOption = (option: Option) => {
 };
 
 export const defaultTo = (item: string, defaultItem: string) => {
-    return item === EVERY ? defaultItem : item
+    return (item === EVERY || !item) ? defaultItem : item
 };
+
+export const rangeHoursToSingle = (hours: any) => {
+    if(hours instanceof Array) {
+        return hours
+    }
+    return hours.split('-')[0]
+};
+
