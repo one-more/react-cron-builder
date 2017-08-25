@@ -5,6 +5,7 @@ import type {CronExpression} from 'types/CronExpression'
 
 import head from 'lodash/head'
 import values from 'lodash/values'
+import get from 'lodash/get'
 import {MINUTES, HOURS, EVERY} from 'data/constants'
 
 export const toggleMultiple = (value: any) => {
@@ -53,7 +54,7 @@ export const ensureMultiple = (value: any, multiple: boolean) => {
 export const getValues = (value: Array<Option>) => value.map((option: Option) => option.value);
 
 export const getValue = (value: any) => {
-    return typeof value === 'object' ? value.value : value
+    return get(value, 'value') || value
 };
 
 export const generateCronExpression = (expression: CronExpression) => {
