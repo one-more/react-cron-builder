@@ -1,6 +1,6 @@
 {
     "name": "react-cron-builder",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "dist/bundle.js",
     "description": "react component to create cron expression",
     "repository": "https://github.com/one-more/react-cron-builder",
@@ -11,15 +11,16 @@
     },
     "homepage": "https://github.com/one-more/react-cron-builder#readme",
     "peerDependencies": {
-        "react": "*",
-        "lodash": "^4.17.2"
+        "react": "^15.5.4",
+        "lodash": "^4.17.2",
+        "prop-types": "^15.6.0"
     },
     "dependencies": {
         "classnames": "^2.2.5",
         "cronstrue": "^0.10.3",
+        "react-bem-helper": "^1.4.1",
         "react-if": "^2.1.0",
-        "react-select": "^1.0.0-rc.2",
-        "react-bem-helper": "^1.4.1"
+        "react-select": "^1.0.0-rc.2"
     },
     "devDependencies": {
         "@kadira/storybook": "^2.35.3",
@@ -60,7 +61,8 @@
         "style-loader": "^0.13.1",
         "stylus": "^0.54.5",
         "stylus-loader": "^3.0.1",
-        "webpack": "^2.4.1"
+        "webpack": "^2.4.1",
+        "react-dom": "^15.5.4"
     },
     "scripts": {
         "test": "jest --coverage",
