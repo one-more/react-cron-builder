@@ -42,7 +42,7 @@ module.exports = {
             'node_modules',
             path.join(__dirname, 'src')
         ],
-        extensions: ['.js', '.styl', 'css']
+        extensions: ['.js', '.styl', '.css']
     },
     externals: {
         react: 'react',

@@ -1,15 +1,9 @@
-import React from 'react';
-import {configure, addDecorator} from '@kadira/storybook';
+import { configure } from '@storybook/react';
 
-require('normalize.css');
-
-const ctx = require.context('../src/', true, /.stories.js$/);
-
-const wrapper = (story) => <div style={{padding: 10}}>{story()}</div>;
-addDecorator(wrapper);
-
+// automatically import all files ending in *.stories.js
+const req = require.context('../src/stories', true, /.stories.js$/);
 function loadStories() {
-    ctx.keys().forEach(filename => ctx(filename));
+  req.keys().forEach(filename => req(filename));
 }
 
 configure(loadStories, module);
