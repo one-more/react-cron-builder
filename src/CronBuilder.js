@@ -116,6 +116,7 @@ export default class CronBuilder extends PureComponent {
                 </fieldset>
                 <div style={{textAlign: 'center'}} >
                     <button
+                        type="button"
                         {...styleNameFactory('action')}
                         onClick={this.generateExpression}
                         data-action
