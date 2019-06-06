@@ -7,8 +7,8 @@ import {isMultiple, ensureMultiple, replaceEvery} from 'utils'
 import type {PresetTabState} from './types/PresetTabState'
 import type {PresetTabProps} from './types/PresetTabProps'
 
-export const ensureEveryOn = (value: any, multiple: boolean) => {
-    const process = (item: any) => {
+export const ensureEveryOn = (value: string[] | string, multiple: boolean) => {
+    const process = (item: string) => {
         if(item === EVERY) {
             return item
         }
@@ -29,6 +29,23 @@ export const ensureEveryOn = (value: any, multiple: boolean) => {
         return process(value)
     }
 };
+
+export function ensureValue(value: string | string[]) {
+    if (Array.isArray(value) && !value.length) {
+        return [EVERY]
+    }
+    if (!value) {
+        return EVERY
+    }
+    return value
+}
+
+export function ensureArrayValue(value: string[]): string[] {
+    if (value.length) {
+        return value
+    }
+    return [EVERY]
+}
 
 export default class PresetTab extends PureComponent {
     constructor(props: PresetTabProps, ctx: Object) {
@@ -53,31 +70,31 @@ export default class PresetTab extends PureComponent {
 
     selectMinutes = (value: string) => {
         this.setState({
-            minutes: value
+            minutes: ensureValue(value)
         })
     };
 
     selectHours = (value: string) => {
         this.setState({
-            hours: value
+            hours: ensureValue(value)
         })
     };
 
     selectDayOfWeek = (value: string) => {
         this.setState({
-            dayOfWeek: value
+            dayOfWeek: ensureArrayValue(value)
         })
     };
 
     selectDayOfMonth = (value: string) => {
         this.setState({
-            dayOfMonth: value
+            dayOfMonth: ensureArrayValue(value)
         })
     };
 
     selectMonth = (value: string) => {
         this.setState({
-            month: value
+            month: ensureArrayValue(value)
         })
     };
 
