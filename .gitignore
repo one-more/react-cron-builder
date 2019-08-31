@@ -1,1 +1,6 @@
 .storybook/build/storybook_static
+package-lock.json
+node_modules
+coverage
+*.log
+.idea
