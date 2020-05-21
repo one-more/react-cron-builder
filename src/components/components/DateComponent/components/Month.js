@@ -5,7 +5,7 @@ import {PureComponent} from 'react'
 const monthOptions = [
     'January', 'February', 'March', 'April',
     'May', 'June', 'July', 'August', 'September',
-    'November', 'December'
+    'October', 'November', 'December'
 ].map((month: string, i: number) => ({
     label: month,
     value: String(i + 1)
