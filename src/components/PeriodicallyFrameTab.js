@@ -2,17 +2,17 @@
 
 import React from 'react'
 import range from 'lodash/range'
-import {toOptions, defaultTo, ensureMultiple} from 'utils'
-import type {Option} from 'types/Option'
+import { toOptions, defaultTo, ensureMultiple } from 'utils'
+import type { Option } from 'types/Option'
 import PresetTab from './PresetTab'
 import MultipleSwitcher from './MultipleSwitcher'
 import TimeInput from './components/TimeInput'
-import DateComponent, {DayOfWeek, DayOfMonth, Month} from './components/DateComponent'
-import type {PresetTabProps} from './types/PresetTabProps'
+import { AllDayComponent } from './components/DateComponent'
+import type { PresetTabProps } from './types/PresetTabProps'
 
 const minutesOptions = toOptions(range(1, 60)).map((option: Option) => {
-    const {label, value} = option;
-    if(label === '1') {
+    const { label, value } = option;
+    if (label === '1') {
         return {
             label: `${label} min`,
             value
@@ -26,7 +26,7 @@ const minutesOptions = toOptions(range(1, 60)).map((option: Option) => {
 });
 
 const hoursOptions = toOptions(range(0, 24)).map((option: Option) => {
-    const {label, value} = option;
+    const { label, value } = option;
     return {
         label: `${'0'.concat(label).slice(-2)}:00`,
         value
@@ -49,8 +49,8 @@ const defaultHours = (hours: string, defaultValue: string) => {
 export default class PeriodicallyFrameTab extends PresetTab {
     constructor(props: PresetTabProps, ctx: Object) {
         super(props, ctx);
-        const {state} = this;
-        let {hours, minutes} = state;
+        const { state } = this;
+        let { hours, minutes } = state;
         minutes = defaultTo(minutes, '6');
         hours = ensureMultiple(hours, false);
         hours = defaultHours(String(hours), '9-18');
@@ -65,14 +65,14 @@ export default class PeriodicallyFrameTab extends PresetTab {
     }
 
     isMinutesMultiple = () => {
-        const {minutesMultiple} = this.state;
+        const { minutesMultiple } = this.state;
         return minutesMultiple
     };
 
     onHoursChange = (field: string) => {
         return (value: string) => {
-            const {hoursFrom, hoursTo} = this.state;
-            if(field === 'hoursFrom') {
+            const { hoursFrom, hoursTo } = this.state;
+            if (field === 'hoursFrom') {
                 this.setState({
                     hours: `${value}-${String(hoursTo)}`,
                     hoursFrom: value
@@ -87,8 +87,8 @@ export default class PeriodicallyFrameTab extends PresetTab {
     };
 
     render() {
-        const {styleNameFactory} = this.props;
-        const {minutes, hoursFrom, hoursTo, dayOfWeek, dayOfMonth, month} = this.state;
+        const { styleNameFactory } = this.props;
+        const { minutes, hoursFrom, hoursTo, dayOfWeek, dayOfMonth, month } = this.state;
         return (
             <div
                 {...styleNameFactory('preset')}
@@ -144,22 +144,17 @@ export default class PeriodicallyFrameTab extends PresetTab {
                         />
                     </div>
                 </div>
-                <DateComponent
-                    styleNameFactory={styleNameFactory}
-                >
-                    <DayOfWeek
-                        value={dayOfWeek}
-                        onChange={this.selectDayOfWeek}
+                <div>
+                    <AllDayComponent
+                        dayOfWeek={dayOfWeek}
+                        dayOfMonth={dayOfMonth}
+                        month={month}
+                        styleNameFactory={styleNameFactory}
+                        selectDayOfWeek={this.selectDayOfWeek}
+                        selectDayOfMonth={this.selectDayOfMonth}
+                        selectMonth={this.selectMonth}
                     />
-                    <DayOfMonth
-                        value={dayOfMonth}
-                        onChange={this.selectDayOfMonth}
-                    />
-                    <Month
-                        value={month}
-                        onChange={this.selectMonth}
-                    />
-                </DateComponent>
+                </div>
             </div>
         )
     }

@@ -15,6 +15,6 @@ export default class DayOfMonth extends PureComponent {
     static getOptions() {
         return options
     }
-
+    static displayName: string = 'Day Of Month?';
     static className: string = 'DayOfMonth';
 }

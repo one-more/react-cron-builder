@@ -7,7 +7,7 @@ import {isMultiple, toggleDateType, toOptions, rangeHoursToSingle} from 'utils'
 import range from 'lodash/range'
 import MultipleSwitcher from './MultipleSwitcher'
 import TimeInput from './components/TimeInput'
-import DateComponent, {DayOfWeek, DayOfMonth, Month} from './components/DateComponent'
+import { AllDayComponent } from './components/DateComponent';
 import PresetTab from './PresetTab'
 import type {PresetTabState} from './types/PresetTabState'
 import type {PresetTabProps} from './types/PresetTabProps'
@@ -91,22 +91,17 @@ export default class PeriodicallyTab extends PresetTab {
                         </div>
                     </div>
                 </div>
-                <DateComponent
-                    styleNameFactory={styleNameFactory}
-                >
-                    <DayOfWeek
-                        value={dayOfWeek}
-                        onChange={this.selectDayOfWeek}
+                <div>
+                    <AllDayComponent
+                        dayOfWeek={dayOfWeek}
+                        dayOfMonth={dayOfMonth}
+                        month={month}
+                        styleNameFactory={styleNameFactory}
+                        selectDayOfWeek={this.selectDayOfWeek}
+                        selectDayOfMonth={this.selectDayOfMonth}
+                        selectMonth={this.selectMonth}
                     />
-                    <DayOfMonth
-                        value={dayOfMonth}
-                        onChange={this.selectDayOfMonth}
-                    />
-                    <Month
-                        value={month}
-                        onChange={this.selectMonth}
-                    />
-                </DateComponent>
+                </div>
             </div>
         )
     }

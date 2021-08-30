@@ -3,12 +3,11 @@
 import {PureComponent} from 'react'
 
 const weekDaysOptions = [
-    'Mondays', 'Tuesdays', 'Wednesdays',
-    'Thursdays', 'Fridays', 'Saturdays',
-    'Sundays'
+    'Sundays', 'Mondays', 'Tuesdays', 'Wednesdays',
+    'Thursdays', 'Fridays', 'Saturdays'
 ].map((day: string, i: number) => ({
     label: day,
-    value: String(i + 1)
+    value: String(i)
 }));
 
 const options = [
@@ -22,7 +21,7 @@ const options = [
     },
     {
         label: 'Saturdays and Sundays',
-        value: '6-7'
+        value: '0,6'
     }
 ].concat(weekDaysOptions);
 
@@ -30,6 +29,6 @@ export default class DayOfWeek extends PureComponent {
     static getOptions() {
         return options
     }
-
+    static displayName: string = 'Day Of Week?';
     static className: string = 'DayOfWeek';
 }

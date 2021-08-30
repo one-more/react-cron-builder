@@ -9,8 +9,9 @@
     font-size 14px
 
     &__fieldset
-        border-color $darkBlue
+        border-color $white
         border-style solid
+        border-width 0.5px
 
     &__legend
         padding 0 5px
@@ -29,13 +30,15 @@
             background-image linear-gradient(to bottom, $white, $grey100)
 
         &--active
-            background-color $grey
+            background-color $blue
+            border 1px solid $white
+            color $white
             background-image none
             cursor default
 
     &__preset
         min-height 100px
-        display flex
+        display block
         align-items flex-end
         margin-bottom 40px
         margin-top 20px
@@ -45,7 +48,8 @@
         max-width 400px
 
     &__row
-        display flex
+        display block
+        margin-top 10px
 
         &--main
             margin-top 5px
@@ -66,6 +70,7 @@
         display block
 
     &__link
+        position relative !important
         color $white
         cursor pointer
         right 0
@@ -82,8 +87,8 @@
         border none
 
     &__result
-        background-color $black
-        color $white
+        background-color $white
+        color $black
         height 40px
         display flex
         align-items center
@@ -92,11 +97,12 @@
 
     &__hr
         border none
-        border-top 1px dashed $white
+        margin: none;
+        border-top 1px solid $white;
 
     &__pretty-expression
         color $white
-        margin-top 20px
+        margin-top 5px
         margin-bottom 5px
         font-weight bold
         font-size 14px

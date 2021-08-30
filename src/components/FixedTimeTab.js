@@ -1,12 +1,12 @@
 // @flow
 
 import React from 'react'
-import {toOptions, addLeadingZeroToOption, defaultTo, ensureMultiple, rangeHoursToSingle} from 'utils'
+import { toOptions, addLeadingZeroToOption, defaultTo, ensureMultiple, rangeHoursToSingle } from 'utils'
 import range from 'lodash/range'
 import PresetTab from './PresetTab'
 import TimeInput from './components/TimeInput'
-import type {PresetTabProps} from './types/PresetTabProps'
-import DateComponent, {DayOfWeek, DayOfMonth, Month} from './components/DateComponent'
+import type { PresetTabProps } from './types/PresetTabProps'
+import { AllDayComponent } from './components/DateComponent'
 
 const hoursOptions = toOptions(range(0, 24)).map(addLeadingZeroToOption);
 const minutesOptions = toOptions(range(0, 60)).map(addLeadingZeroToOption);
@@ -14,7 +14,7 @@ const minutesOptions = toOptions(range(0, 60)).map(addLeadingZeroToOption);
 export default class FixedTimeTab extends PresetTab {
     constructor(props: PresetTabProps, ctx: Object) {
         super(props, ctx);
-        let {hours, minutes} = this.state;
+        let { hours, minutes } = this.state;
         hours = ensureMultiple(hours, false);
         hours = rangeHoursToSingle(hours);
         minutes = ensureMultiple(minutes, false);
@@ -25,8 +25,8 @@ export default class FixedTimeTab extends PresetTab {
     }
 
     render() {
-        const {styleNameFactory} = this.props;
-        const {minutes, hours, dayOfWeek, dayOfMonth, month} = this.state;
+        const { styleNameFactory } = this.props;
+        const { minutes, hours, dayOfWeek, dayOfMonth, month } = this.state;
         return (
             <div
                 {...styleNameFactory('preset')}
@@ -56,25 +56,16 @@ export default class FixedTimeTab extends PresetTab {
                         />
                     </div>
                 </div>
-                <div
-                    style={{marginLeft: 35}}
-                >
-                    <DateComponent
+                <div>
+                    <AllDayComponent
+                        dayOfWeek={dayOfWeek}
+                        dayOfMonth={dayOfMonth}
+                        month={month}
                         styleNameFactory={styleNameFactory}
-                    >
-                        <DayOfWeek
-                            value={dayOfWeek}
-                            onChange={this.selectDayOfWeek}
-                        />
-                        <DayOfMonth
-                            value={dayOfMonth}
-                            onChange={this.selectDayOfMonth}
-                        />
-                        <Month
-                            value={month}
-                            onChange={this.selectMonth}
-                        />
-                    </DateComponent>
+                        selectDayOfWeek={this.selectDayOfWeek}
+                        selectDayOfMonth={this.selectDayOfMonth}
+                        selectMonth={this.selectMonth}
+                    />
                 </div>
             </div>
         )

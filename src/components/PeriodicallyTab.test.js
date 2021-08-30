@@ -24,7 +24,7 @@ describe('PeriodicallyTab', () => {
         expect(
             wrapper.find(MultipleSwitcher).at(1).find(Tab).at(0).props().isActive
         ).toBeTruthy();
-        expect(wrapper.find(Select).at(0).props().value).toEqual('1')
+        expect(wrapper.find(Select).at(0).props().value).toEqual('3')
     });
 
     it('switch multiple minutes', () => {

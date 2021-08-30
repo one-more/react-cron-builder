@@ -82,7 +82,7 @@
     "silent": true,
     "run": [
       "build-prod",
-      "test",
+      //"test",
       "git-add"
     ]
   },
