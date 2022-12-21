@@ -22,7 +22,7 @@ const options = [
     },
     {
         label: 'Saturdays and Sundays',
-        value: '6-0'
+        value: '6,0'
     }
 ].concat(weekDaysOptions);
 
