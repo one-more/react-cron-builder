@@ -3,12 +3,12 @@
 import {PureComponent} from 'react'
 
 const weekDaysOptions = [
-    'Mondays', 'Tuesdays', 'Wednesdays',
+    'Sundays', 'Mondays', 'Tuesdays', 'Wednesdays',
     'Thursdays', 'Fridays', 'Saturdays',
-    'Sundays'
+    
 ].map((day: string, i: number) => ({
     label: day,
-    value: String(i + 1)
+    value: String(i)
 }));
 
 const options = [
@@ -22,7 +22,7 @@ const options = [
     },
     {
         label: 'Saturdays and Sundays',
-        value: '6-7'
+        value: '6,0'
     }
 ].concat(weekDaysOptions);
 
