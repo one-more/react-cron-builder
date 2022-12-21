@@ -1,5 +1,5 @@
 {
-  "name": "react-cron-builder",
+  "name": "@moonfroglabs/react-cron-builder",
   "version": "1.0.4",
   "main": "dist/bundle.js",
   "description": "react component to create cron expression",
